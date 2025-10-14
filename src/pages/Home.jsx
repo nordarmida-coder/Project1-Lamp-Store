@@ -1,32 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ProductCard from "../components/ProductCard";
+import products from "../products";
 
-function Home({ addToCart }) {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+function Home() {
+  const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const res = await fetch("https://fakestoreapi.com/products");
-        const data = await res.json();
-        setProducts(data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching products:", err);
-        setLoading(false);
-      }
-    }
-    fetchProducts();
-  }, []);
-
-  if (loading) return <p className="text-center mt-4">Loading products...</p>;
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
 
   return (
-    <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} addToCart={addToCart} />
-      ))}
+    <div style={{ padding: "20px" }}>
+      <h1 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "20px" }}>Lamp Store</h1>
+
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} addToCart={addToCart} />
+        ))}
+      </div>
+
+      <div style={{ marginTop: "30px" }}>
+        <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "10px" }}>Cart ({cart.length} items)</h2>
+        {cart.length === 0 ? (
+          <p>Your cart is empty.</p>
+        ) : (
+          <ul>
+            {cart.map((item, index) => (
+              <li key={index} style={{ marginBottom: "5px" }}>
+                {item.name} - {item.price.toFixed(2)}€
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }
