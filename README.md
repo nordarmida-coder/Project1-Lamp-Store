@@ -5,8 +5,11 @@ This is a simple e-commerce web application built with **React** and **Vite**.
 ## Features
 - Product listing with search and category filters
 - Shopping cart with add/remove items
-- Dynamic price updates
+- Update quantity directly in the cart (minimum 1 item)
+- Dynamic total price calculation in the cart
+- Navigation between Home and Cart pages
 - Responsive UI with Tailwind CSS
+- Context API for global state management
 
 ## Technologies
 - React 18+
