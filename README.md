@@ -24,4 +24,4 @@ npm run dev
 
 Open the application in your browser:
 http://localhost:5173
-# Project1-Lamp-Store
+# Project1-Lamp-Store o
