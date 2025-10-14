@@ -1,15 +1,19 @@
 function ProductCard({ product, addToCart }) {
   return (
-    <div style={{
-      border: "1px solid #ccc",
-      padding: "10px",
-      width: "180px", 
-      textAlign: "center"
-    }}>
+    <div
+      style={{
+        border: "1px solid #ccc",
+        padding: "10px",
+        width: "200px",
+        textAlign: "center",
+        backgroundColor: "#fafafa",
+        borderRadius: "8px",
+      }}
+    >
       <img
         src={product.image}
         alt={product.name}
-        style={{ width: "150px", height: "150px", objectFit: "cover" }}
+        style={{ width: "160px", height: "160px", objectFit: "cover" }}
       />
       <h3>{product.name}</h3>
       <p>{product.brightness}</p>

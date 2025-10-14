@@ -1,33 +1,57 @@
-function Cart({ cart }) {
+import { useCart } from "../context/CartContext";
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+function Cart() {
+  const { cart, updateQuantity, removeFromCart } = useCart();
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2 style={{ fontSize: "24px", marginBottom: "10px" }}>Your Cart</h2>
+      <h1>Cart</h1>
       {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <p>Your cart is empty</p>
       ) : (
         <>
           <ul style={{ listStyle: "none", padding: 0 }}>
-            {cart.map((item, index) => (
+            {cart.map((item) => (
               <li
-                key={index}
+                key={item.id}
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
+                  marginBottom: "10px",
+                  alignItems: "center",
+                  border: "1px solid #ccc",
                   padding: "10px",
-                  borderBottom: "1px solid #ccc"
+                  width: "300px",
                 }}
               >
                 <span>{item.name}</span>
-                <span>{item.price.toFixed(2)}€</span>
+                <div>
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    style={{ marginRight: "5px" }}
+                  >
+                    -
+                  </button>
+                  {item.quantity}
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    style={{ marginLeft: "5px" }}
+                  >
+                    +
+                  </button>
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    style={{ marginLeft: "10px" }}
+                  >
+                    Remove
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
-          <div style={{ marginTop: "15px", fontWeight: "bold", fontSize: "18px" }}>
-            Total: {total.toFixed(2)}€
-          </div>
+          <h2>Total: {total.toFixed(2)}€</h2>
         </>
       )}
     </div>
@@ -35,3 +59,4 @@ function Cart({ cart }) {
 }
 
 export default Cart;
+

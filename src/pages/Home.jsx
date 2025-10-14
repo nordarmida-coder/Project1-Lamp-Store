@@ -1,14 +1,37 @@
-import ProductCard from "../components/ProductCard";
 import products from "../products";
+import ProductCard from "../components/ProductCard";
+import { useCart } from "../context/CartContext";
 
-function Home({ addToCart }) {
+function Home({ selectedCategory, searchTerm }) {
+  const { addToCart } = useCart();
+
+  
+  const filteredProducts = products.filter((product) => {
+    const matchCategory =
+      selectedCategory === "All" || product.category === selectedCategory;
+    const matchSearch = product.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return matchCategory && matchSearch;
+  });
+
   return (
-    <div style={{ padding: "20px" }}>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-        {products.map(product => (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+        gap: "20px",
+        padding: "20px",
+        justifyItems: "center",
+      }}
+    >
+      {filteredProducts.length > 0 ? (
+        filteredProducts.map((product) => (
           <ProductCard key={product.id} product={product} addToCart={addToCart} />
-        ))}
-      </div>
+        ))
+      ) : (
+        <p>No products found.</p>
+      )}
     </div>
   );
 }
